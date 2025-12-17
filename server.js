@@ -23,6 +23,23 @@ const server = http.createServer((req, res) => {
     ".css": "text/css"
   }[ext] || "text/plain";
 
+  if (pathname === "/check-room") {
+    const room = url.searchParams.get("room");
+
+    if (!room) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Room id required" }));
+      return;
+    }
+
+    const exists = channels.has(room);
+
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ exists }));
+    return;
+  }
+
+
   fs.readFile(filePath, (err, content) => {
     if (err) {
       res.writeHead(404);
