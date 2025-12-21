@@ -303,11 +303,13 @@ cameraBtn.addEventListener("click", () => {
 });
 
 function muteMicrophone(stream) {
+   if (!stream) return; 
   micBtn.querySelector("i").className = "fa-solid fa-microphone-slash";
   stream.getAudioTracks().forEach(t => (t.enabled = false));
 }
 
 function unmuteMicrophone(stream) {
+   if (!stream) return;
   micBtn.querySelector("i").className = "fa-solid fa-microphone";
   stream.getAudioTracks().forEach(t => (t.enabled = true));
 }
